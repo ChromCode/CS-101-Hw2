@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 #This Function is Merge Sort
 #Code inspired from interactivePython
