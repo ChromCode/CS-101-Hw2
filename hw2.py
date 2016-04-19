@@ -1,51 +1,47 @@
-import numpy
+import numpy as np
 
 #This Function is Merge Sort
 #Code inspired from interactivePython
 def mergesort(A):
-    if len(A)>1: #do nothing if the length of the array is 1
-        mid = len(A)//2 #divide the array into two portions
-        leftHalf = A[:mid]
-        rightHalf = A[mid:]
-        #recursively do the same thing on each half
-        mergesort(leftHalf)
-        mergesort(rightHalf)
-       
-        #these variables are indicies for each array
-        i=0
-        j=0
-        k=0
-        #This loop will check if i and j are less than the lengths 
-        #of the two respective halves
-        while i < len(leftHalf) and j < len(rightHalf):
-            if leftHalf[i] < rightHalf[j]:
-                # Set A[k] to be the least element in the left half, then increment i
-                A[k]=leftHalf[i]
-                i=i+1
-            else:
-                # Set A[k] to be the least element in right half
-                A[k]=rightHalf[j]
-                j=j+1
-            #Always increment k
-            k=k+1
-        # This loop will 
-        while i < len(leftHalf):
-            A[k]=leftHalf[i]
-            i=i+1
-            k=k+1
-
-        while j < len(rightHalf):
-            A[k]=rightHalf[j]
-            j=j+1
-            k=k+1
-
+    if A.size == 1:
+        return A
+    mid = A.size//2
+    leftHalf = A[:mid]
+    rightHalf = A[mid:]
+    #recursively do the same thing on each half
+    lSort = mergesort(leftHalf)
+    rSort = mergesort(rightHalf)
+    return merge(lSort, rSort) #combine two arrays that are sorted
+    #to get the correct sorted output, follow these lines
+    #######################################
+        #sortedAlist = mergesort(alist)
+        #print(sortedAlist)
+    #######################################
+    
+# this code follows the pseudocode from the lecture slides
+def merge(B,C):
+    D = np.empty([(B.size + C.size)]) #initialize an empty array
+    Infinity = float('inf') # this is represented as infinity
+    B = np.append(B, Infinity) #append infinity to the end of B and C
+    C = np.append(C, Infinity)
+    i = j = k = 0
+    #while the current element is not infinity, do comparisons on the elements of B and C
+    while B[i] < Infinity or C[j] < Infinity: 
+        if B[i] < C[j]:
+            D[k] = B[i]
+            i = i + 1
+        else:
+            D[k] = C[j]
+            j = j + 1
+        k = k + 1 # we Always increment k
+    return D
 
 #This function is Selection Sort
 #Code inspired from the lecture Slides
 def selectionsort(A):
-    for i in range( len(A) ):
+    for i in range( A.size ):
         min = i #set a minimum
-        for k in range( i + 1 , len(A) ):
+        for k in range( i + 1 , A.size ):
             if A[k] < A[min]: #if A[k] is less than the current min
                 min = k #set the new min to be k
         #we then swap the min and min Index
@@ -54,12 +50,8 @@ def selectionsort(A):
 #This function is Insertion Sort
 #Code inspired from the lecture slides                
 def insertionsort(A):
-    for i in range ( 1, len(A) ): #start at A[1] to A[n]
+    for i in range ( 1, A.size ): #start at A[1] to A[n]
         j = i
         while (j>0) and A[j-1] > A[j]: #while the previous j is less than current j
             A[j], A[j-1] = A[j-1], A[j] #this swaps A[j] and A[j-1]
             j = j-1
-            
-myList = [12, 5, 13, 8, 9, 65, 78, 2, 53, 65, 21, 80]
-mergesort(myList)
-print(myList)
