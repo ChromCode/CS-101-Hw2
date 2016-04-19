@@ -1,4 +1,6 @@
 import numpy as np
+import timeit
+import matplotlib.pyplot as plt
 
 #This Function is Merge Sort
 #Code inspired from interactivePython
@@ -55,3 +57,34 @@ def insertionsort(A):
         while (j>0) and A[j-1] > A[j]: #while the previous j is less than current j
             A[j], A[j-1] = A[j-1], A[j] #this swaps A[j] and A[j-1]
             j = j-1
+            
+###########################################
+#This is for timeit and pyplot
+###########################################
+def mergeSortInOrder(A):
+    aList = np.random.randint(100, size = A )
+    inOrderAList = sorted(aList)
+    mergesort(inOrderAlist)
+    #mergesort(reverseAList)
+    pass
+    
+def mergeSortReverseOrder(A):
+    aList = np.random.randint(100, size = A )
+    reverseAList = sorted(aList, reverse = True)
+    mergesort(reverseAList)
+    pass
+
+for i in range(100, 10100, 100): #this will run from 100 to 10000, printing and plotting time
+    orderedArrayTime = timeit.timeit("mergeSortInOrder", 
+    setup="from __main__ import mergeSortInOrder", number = i)
+    
+    reversedArrayTime = timeit.timeit("mergeSortReverseOrder",
+    setup="from __main__ import mergeSortReverseOrder", number = i)
+    plt.plot(i, orderedArrayTime, 'bs' ) #Will plot blue squares as orderedArray
+    plt.plot(i, reversedArrayTime, 'g^') #Will plot green triangles as reversedArray
+    
+plt.show()
+#######Remove before uploading############
+#I have two wrapper funcions just for mergesort, lets try and see if we can use the same functions for 
+#selection and insertion sort as well
+##########################################
