@@ -69,7 +69,8 @@ def mergeSortInOrder(A):
 def mergeSortReverseOrder(A):
 #Create a random numpy array with elements ranging from (0, 999) and a length of A
     aList = np.random.randint(1000, size = A )
-    reverseAList = sorted(aList, reverse = True)
+    reverseAList = np.sort(aList)
+    reverseAList = reverseAList[::-1] #this sorts the list in reverse
     mergesort(reverseAList)
     pass
     
@@ -83,7 +84,8 @@ def insertionSortInOrder(A):
 def insertionSortReverseOrder(A):
     #Create a random numpy array with elements ranging from (0, 999) and a length of A
     aList = np.random.randint(1000, size = A )
-    reverseAList = sorted(aList, reverse = True)
+    reverseAList = np.sort(aList)
+    reverseAList = reverseAList[::-1]
     insertionsort(reverseAList)
     pass
     
@@ -97,7 +99,8 @@ def selectionSortInOrder(A):
 def selectionSortReverseOrder(A):
     #Create a random numpy array with elements ranging from (0, 999) and a length of A
     aList = np.random.randint(1000, size = A )
-    reverseAList = sorted(aList, reverse = True)
+    reverseAList = np.sort(aList)
+    reverseAList = reverseAList[::-1]
     selectionsort(reverseAList)
     pass
 
