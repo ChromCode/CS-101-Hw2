@@ -15,10 +15,8 @@ def mergesort(A):
     rSort = mergesort(rightHalf)
     return merge(lSort, rSort) #combine two arrays that are sorted
     #to get the correct sorted output, follow these lines
-    #######################################
         #sortedAlist = mergesort(alist)
         #print(sortedAlist)
-    #######################################
     
 # this code follows the pseudocode from the lecture slides
 def merge(B,C):
@@ -57,34 +55,115 @@ def insertionsort(A):
         while (j>0) and A[j-1] > A[j]: #while the previous j is less than current j
             A[j], A[j-1] = A[j-1], A[j] #this swaps A[j] and A[j-1]
             j = j-1
-            
-###########################################
-#This is for timeit and pyplot
-###########################################
+
+#-------------------------------------
+#These are all wrapper functions for timeit
+
 def mergeSortInOrder(A):
-    aList = np.random.randint(100, size = A )
+    #Create a random numpy array with elements ranging from (0, 999) and a length of A
+    aList = np.random.randint(1000, size = A ) 
     inOrderAList = sorted(aList)
-    mergesort(inOrderAlist)
-    #mergesort(reverseAList)
+    mergesort(inOrderAList)
     pass
     
 def mergeSortReverseOrder(A):
-    aList = np.random.randint(100, size = A )
+#Create a random numpy array with elements ranging from (0, 999) and a length of A
+    aList = np.random.randint(1000, size = A )
     reverseAList = sorted(aList, reverse = True)
     mergesort(reverseAList)
     pass
+    
+def insertionSortInOrder(A):
+    #Create a random numpy array with elements ranging from (0, 999) and a length of A
+    aList = np.random.randint(1000, size = A )
+    inOrderAList = sorted(aList)
+    insertionsort(inOrderAList)
+    pass
+    
+def insertionSortReverseOrder(A):
+    #Create a random numpy array with elements ranging from (0, 999) and a length of A
+    aList = np.random.randint(1000, size = A )
+    reverseAList = sorted(aList, reverse = True)
+    insertionsort(reverseAList)
+    pass
+    
+def selectionSortInOrder(A):
+    #Create a random numpy array with elements ranging from (0, 999) and a length of A
+    aList = np.random.randint(1000, size = A )
+    inOrderAList = sorted(aList)
+    selectoinsort(inOrderAList)
+    pass
+    
+def selectionSortReverseOrder(A):
+    #Create a random numpy array with elements ranging from (0, 999) and a length of A
+    aList = np.random.randint(1000, size = A )
+    reverseAList = sorted(aList, reverse = True)
+    selectionsort(reverseAList)
+    pass
+    
+#----------------------------------------
+#these for loops will plot sorting times on each algorithm based on input size
+
+#mergesort on a sorted and reverse sorted array
 
 for i in range(100, 10100, 100): #this will run from 100 to 10000, printing and plotting time
-    orderedArrayTime = timeit.timeit("mergeSortInOrder", 
-    setup="from __main__ import mergeSortInOrder", number = i)
+    orderedArrayTime = timeit.timeit("mergeSortInOrder({0})".format(str(i)), 
+    setup="from __main__ import mergeSortInOrder", number = 1)
     
-    reversedArrayTime = timeit.timeit("mergeSortReverseOrder",
-    setup="from __main__ import mergeSortReverseOrder", number = i)
-    plt.plot(i, orderedArrayTime, 'bs' ) #Will plot blue squares as orderedArray
-    plt.plot(i, reversedArrayTime, 'g^') #Will plot green triangles as reversedArray
+    reversedArrayTime = timeit.timeit("mergeSortReverseOrder({0})".format(str(i)),
+    setup="from __main__ import mergeSortReverseOrder", number = 1)
+    plt.plot(i, orderedArrayTime, 'bs' )  #Will plot blue squares as orderedArray
+    plt.plot(i, reversedArrayTime, 'g^')  #Will plot green triangles as reversedArray
+    plt.title('MergeSort on sorted and reverse sorted')
     
 plt.show()
-#######Remove before uploading############
-#I have two wrapper funcions just for mergesort, lets try and see if we can use the same functions for 
-#selection and insertion sort as well
-##########################################
+
+#insertionsort on a sorted and reverse sorted array
+
+for i in range(100, 10100, 100): #this will run from 100 to 10000, printing and plotting time
+    orderedArrayTime = timeit.timeit("insertionSortInOrder({0})".format(str(i)), 
+    setup="from __main__ import selectionSortInOrder", number = 1)
+    
+    reversedArrayTime = timeit.timeit("insertionReverseOrder({0})".format(str(i)), 
+    setup="from __main__ import selectionSortReverseOrder", number = 1)
+    
+    plt.plot(i, orderedArrayTime, 'bs' )  #Will plot blue squares as orderedArray
+    plt.plot(i, reversedArrayTime, 'g^')  #Will plot green triangles as reversedArray
+    plt.title('InsertionSort on sorted and reverse sorted')
+
+plt.show()
+
+#selectionsort on a sorted and reverse sorted array
+for i in range(100, 10100, 100): #this will run from 100 to 10000, printing and plotting time
+    orderedArrayTime = timeit.timeit("selectionSortInOrder({0})".format(str(i)), 
+    setup="from __main__ import selectionSortInOrder", number = 1)
+    
+    reversedArrayTime = timeit.timeit("selectionSortReverseOrder({0})".format(str(i)),
+    setup="from __main__ import selectionSortReverseOrder", number = 1)
+    plt.plot(i, orderedArrayTime, 'bs' )  #Will plot blue squares as orderedArray
+    plt.plot(i, reversedArrayTime, 'g^')  #Will plot green triangles as reversedArray
+    plt.title('SelctionSort on sorted and reverse sorted')
+
+plt.show()
+
+#----------------------------------------
+#These compare merge, insertion, and selection sort on one graph
+
+#inOrder Array
+for i in range(100, 10100, 100): #this will run from 100 to 10000, printing and plotting time
+    mergeTime = timeit.timeit("mergeSortInOrder({0})".format(str(i)), 
+    setup="from __main__ import mergeSortInOrder", number = 1)
+    
+    selectionTime = timeit.timeit("selectionSortInOrder({0})".format(str(i)), 
+    setup="from __main__ import selectionSortInOrder", number = 1)
+    
+    insertionTime = timeit.timeit("insertionSortInOrder({0})".format(str(i)), 
+    setup="from __main__ import selectionSortInOrder", number = 1)
+    
+    plt.plot(i, mergeTime, 'bs' )  #Will plot blue squares as orderedArray
+    plt.plot(i, selectionTime, 'g^')  #Will plot green triangles as reversedArray
+    plt.plot(i, insertionTime, 'ro')
+    
+    plt.title('Compare all algorihms on a sorted input')
+
+plt.show()
