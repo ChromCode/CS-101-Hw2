@@ -100,6 +100,18 @@ def selectionSortReverseOrder(A):
     reverseAList = sorted(aList, reverse = True)
     selectionsort(reverseAList)
     pass
+
+def mergeSortPermutation(A):
+    aList = np.random.permutation(A)
+    mergesort(aList)
+    
+def insertionSortPermutation(A):
+    aList = np.random.permutation(A)
+    insertionsort(aList)
+    
+def selectionSortPermutation(A):
+    aList = np.random.permutation(A)
+    selectionsort(aList)
     
 #----------------------------------------
 #these for loops will plot sorting times on each algorithm based on input size
@@ -165,5 +177,46 @@ for i in range(100, 10100, 100): #this will run from 100 to 10000, printing and 
     plt.plot(i, insertionTime, 'ro')
     
     plt.title('Compare all algorihms on a sorted input')
+
+plt.show()
+
+#reverseOrderArray
+for i in range(100, 5100, 100): #this will run from 100 to 10000, printing and plotting time
+    mergeTime = timeit.timeit("mergeSortReverseOrder({0})".format(str(i)), 
+    setup="from __main__ import mergeSortReverseOrder", number = 1)
+    
+    selectionTime = timeit.timeit("selectionSortReverseOrder({0})".format(str(i)), 
+    setup="from __main__ import selectionSortReverseOrder", number = 1)
+    
+    insertionTime = timeit.timeit("insertionSortReverseOrder({0})".format(str(i)), 
+    setup="from __main__ import insertionSortReverseOrder", number = 1)
+    
+    plt.plot(i, mergeTime, 'bs' )  #Will plot blue squares as orderedArray
+    plt.plot(i, selectionTime, 'g^')  #Will plot green triangles as reversedArray
+    plt.plot(i, insertionTime, 'ro')
+    
+    plt.title('Compare all algorihms on a reverse sorted input')
+
+plt.show()
+
+#-------------------------------------------------
+#this loop will plot the time average of all algorithms on a randomized array input
+
+for i in range(100, 5100, 100): #this will run from 100 to 10000, printing and plotting time
+    mergeTime = timeit.timeit("mergeSortPermutation({0})".format(str(i)), 
+    setup="from __main__ import mergeSortPermutation", number = 100)
+    
+    selectionTime = timeit.timeit("selectionSortPermutation({0})".format(str(i)), 
+    setup="from __main__ import selectionSortPermutation", number = 100)
+    
+    insertionTime = timeit.timeit("insertionSortPermutation({0})".format(str(i)), 
+    setup="from __main__ import insertionSortPermutation", number = 100)
+    
+    plt.plot(i, mergeTime, 'bs' )  #Will plot blue squares as orderedArray
+    plt.plot(i, selectionTime, 'g^')  #Will plot green triangles as reversedArray
+    plt.plot(i, insertionTime, 'ro')
+    
+    
+    plt.title('All sorting algorithms with randomized array input')
 
 plt.show()
